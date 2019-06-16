@@ -1,0 +1,29 @@
+<p class="title">{{ data.selected }}</p>
+
+<hr>
+
+<mat-dialog-content class="flex align-center container flex-direction-column" [formGroup]="activityForm" [ngSwitch]="state">
+
+    <mat-radio-group class="flex flex-wrap" formControlName="subgroup_id" *ngSwitchCase="0" required>
+        <mat-radio-button *ngFor="let item of data.subgroups" [value]="item.id">{{ item.name }}</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="flex flex-wrap" formArrayName="product_id" *ngSwitchCase="1">
+        <mat-checkbox *ngFor="let item of data.products; let i = index;" [formControlName]="i" [value]="item" (click)="scrollDown()">{{ item.name }}</mat-checkbox>
+    </div>
+
+    <textarea matInput *ngIf="state === 1 && activityForm.get('product_id').value && isOtherFieldChecked()" class="other-activity" id="other-activity" formControlName="other_activity"></textarea>
+
+</mat-dialog-content>
+
+<div class="flex justify-center" mat-dialog-actions>
+
+    <button mat-button class="mr1" type="button" color="accent" mat-dialog-close>
+        CANCELAR
+    </button>
+
+    <button mat-raised-button type="button" color="accent" (click)="!state ? nextStep() : dialogRef.close(getFinalValue())" [disabled]="(!state && !activityForm.get('subgroup_id').value) || (state === 1 && activityForm.get('product_id').invalid) || (state === 1 && isOtherFieldChecked() && activityForm.get('other_activity').invalid)">
+        {{ !state ? 'Próximo' : 'Ok' }}
+    </button>
+
+</div>

@@ -1,0 +1,45 @@
+.title {
+    font-family: "Helvetica Neue Bold";
+    font-size: 24px;
+    margin: 29px 0;
+    opacity: .75;
+    color: #5D5D5D;
+    text-align: center;
+}
+
+hr {
+    margin: 0;
+    opacity: 0.28;
+    color: #707070;
+}
+
+.container {
+    margin-top: 60px;
+}
+
+.container>.mat-radio-group,
+.container>div {
+    width: 700px;
+    font-size: 18px;
+}
+
+.container .mat-radio-button,
+.container .mat-checkbox {
+    width: 233px;
+    margin: 10px 0 23px;
+}
+
+.mat-dialog-content {
+    min-height: 56%;
+    max-height: 56%;
+    margin: 60px 0 0;
+}
+
+.other-activity {
+    background-color: #F0F2F5;
+    font-family: 'Helvetica Neue Light';
+    font-size: 18px;
+    width: 85%;
+    min-height: 64px;
+    padding: 10px
+}

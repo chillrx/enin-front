@@ -1,0 +1,46 @@
+#homepage { 
+    width: 492px;
+    height: 584.45px;
+    color: #292929;
+}
+
+#homepage img {
+    width: 269.31px;
+    height: 90.79px;
+}
+
+#address {
+    font-size: 22px;
+    opacity: 0.76;
+    margin-top: 86.92px;
+    margin-bottom: 65.29px;
+}
+
+#homepage div p:nth-child(1) {
+    color: #032993;
+    font-weight: bold;
+}
+
+.ripple-container {
+    cursor: pointer;
+    text-align: center;
+
+    width: 195px;
+    height: 163.87px;
+    line-height: 195px;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mat-icon {
+    font-size: 36.94px;
+    color: #032993;
+    height: 36.94px !important;
+    width: 36.94px !important;
+}

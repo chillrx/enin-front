@@ -1,0 +1,59 @@
+<div class="wd100 h100 flex justify-center align-center">
+
+  <div id="homepage" class="flex align-center flex-direction-column">
+
+    <img src="assets/img/logo.svg" alt="CIN - Centro Internacional de Negócios">
+
+    <div id="address" align="center">
+
+      <p>7ª Edição - 09 a 11 de outubro de 2019</p>
+
+      <p>Local: Hotel Best Western Premier - Av. Dr. Antônio</p>
+
+      <p>Gouveia, 925 - Pajuçara, Maceió - AL</p>
+
+    </div>
+
+    <p [style.font-family]="'Helvetica Neue Bold'" [style.opacity]=".63" [style.font-size.px]="17">
+      <span [style.font-family]="'Helvetica Neue Light'" [style.opacity]=".59">INSCRIÇÕES</span> ATÉ 30 DE
+      SETEMBRO</p>
+
+    <div class="wd100 flex justify-around flex-wrap" [style.margin-top.px]="76.59">
+
+      <div [routerLink]="['/register-seller']" routerLinkActive="router-link-active" class="ripple-container mat-elevation-z4 flex align-center justify-center" matRipple [matRippleCentered]="false" [style.border-radius.px]="11" [style.background-color]="'white'">
+
+        <div [style.width.px]="124" [style.height.px]="91.94" class="flex align-center flex-direction-column">
+
+          <mat-icon>account_circle</mat-icon>
+
+          <p [style.font-size.px]="13" [style.font-family]="'Helvetica Neue Light'" [style.line-height]="'normal'">
+            Inscreva-se como</p>
+
+          <p [style.font-family]="'Helvetica Neue Bold'" [style.font-size.px]="22" [style.line-height]="'normal'">
+            VENDEDOR</p>
+
+        </div>
+
+      </div>
+
+      <div [routerLink]="['/register-buyer']" class="ripple-container mat-elevation-z4  flex align-center justify-center" matRipple [matRippleCentered]="false" [style.border-radius.px]="11" [style.background-color]="'white'">
+
+        <div [style.width.px]="124" [style.height.px]="91.94" class="flex align-center flex-direction-column">
+
+          <mat-icon>monetization_on</mat-icon>
+
+          <p [style.font-size.px]="13" [style.font-family]="'Helvetica Neue Light'" [style.line-height]="'normal'">
+            Inscreva-se como</p>
+
+          <p [style.font-family]="'Helvetica Neue Bold'" [style.font-size.px]="22" [style.line-height]="'normal'">
+            COMPRADOR</p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

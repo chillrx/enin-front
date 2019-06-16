@@ -1,0 +1,87 @@
+/deep/ mat-chip .mat-chip:not(.mat-basic-chip) {
+    padding: 1px 1px 0 1px;
+}
+
+/deep/ mat-grid-tile.mat-grid-tile .mat-figure {
+    justify-content: left;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+/* /deep/ mat-grid-tile .mat-select-trigger {
+  display: flex;
+  align-items: baseline;
+  height: 24px;
+} */
+
+/deep/ mat-form-field.mat-form-field {
+    width: 95%;
+}
+
+.contact-phone-list {
+    vertical-align: middle;
+}
+
+hr {
+    border-color: lightslategrey;
+}
+
+.odd-background {
+    background-color: lightgrey;
+}
+
+#content {
+    width: 95%;
+    background: #fff;
+    opacity: 0.8;
+    margin-left: 1%;
+    padding-right: 1%;
+}
+
+#header {
+    padding-top: 20px;
+    margin: 0 auto;
+    height: 150px;
+    width: 100%;
+    text-align: center;
+}
+
+#header img {
+    width: 200px;
+}
+
+#loading {
+    background: #fff;
+    opacity: 0.8;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+}
+
+#presentation {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    margin-left: -400px;
+    width: 800px;
+}
+
+#progress-bar {
+    top: 50%;
+    left: 50%;
+}
+
+#saved {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    margin-left: -400px;
+    text-align: center;
+    width: 800px;
+}
+
+.mat-divider {
+    height: 200px;
+    margin: 0 20px;
+}

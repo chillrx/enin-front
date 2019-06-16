@@ -1,0 +1,171 @@
+snack-bar-container.error {
+    background: #d32f2f;
+    display: flex;
+    justify-content: center;
+}
+
+snack-bar-container.success {
+    background: #59a71a;
+    display: flex;
+    justify-content: center;
+}
+
+.flex {
+    display: flex !important;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center !important;
+}
+
+.justify-evenly {
+    justify-content: space-evenly !important;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+.mt1 {
+    margin-top: 1rem !important;
+}
+
+.mt2 {
+    margin-top: 2rem;
+}
+
+.ml1 {
+    margin-left: 1rem !important;
+}
+
+.mb1 {
+    margin-bottom: 1rem !important;
+}
+
+.mr1 {
+    margin-right: 1rem !important;
+}
+
+.mg1 {
+    margin: 1rem;
+}
+
+.mg3 {
+    margin: 3rem;
+}
+
+.wd10 {
+    width: 10% !important;
+}
+
+.wd20 {
+    width: 20% !important;
+}
+
+.wd30 {
+    width: 30% !important;
+}
+
+.wd40 {
+    width: 40% !important;
+}
+
+.wd50 {
+    width: 50% !important;
+}
+
+.wd60 {
+    width: 60% !important;
+}
+
+.wd70 {
+    width: 70% !important;
+}
+
+.wd80 {
+    width: 80% !important;
+}
+
+.wd90 {
+    width: 90% !important;
+}
+
+.wd100 {
+    width: 100% !important;
+}
+
+.h100 {
+    height: 100% !important;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.footer button {
+    margin-right: 1rem;
+}
+
+.ws-pre {
+    white-space: pre;
+}
+
+.flow-row {
+    flex-flow: row;
+}
+
+.flow-column {
+    flex-flow: column;
+}
+
+.ws-nowrap {
+    white-space: nowrap;
+}
+
+.vam {
+    vertical-align: middle;
+}
+
+.align-flex-start {
+    justify-content: flex-start;
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.overflow-auto {
+    overflow: auto;
+}

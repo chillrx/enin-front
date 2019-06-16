@@ -1,0 +1,546 @@
+<div class="wd100 h100 flex justify-center align-center flex-direction-column">
+
+    <img src="assets/img/logo.svg" alt="CIN - Centro Internacional de Negócios">
+
+    <p id="title">FICHA DE INSCRIÇÃO</p>
+
+    <div class="main-box">
+
+        <mat-tab-group [(selectedIndex)]="tabIndex" mat-stretch-tabs class="stretched-tabs" *ngIf="!loading">
+
+            <mat-tab [formGroup]="companyForm">
+                <ng-template mat-tab-label>
+                    <div [class]="tabIndex === 0 || companyForm.valid ? 'tab-title tab-title-selected' : 'tab-title'">
+                        <mat-icon>business</mat-icon>
+                        <p>Empresa</p>
+                    </div>
+                </ng-template>
+
+                <div class="inner-content">
+
+                    <div>
+
+                        <div>
+
+                            <mat-form-field>
+                                <input matInput placeholder="CNPJ" formControlName="cnpj_number" (change)="getCNPJ()" [textMask]="{mask: masks.cnpj}" required>
+                                <mat-hint *ngIf="isCNPJValid()">CNPJ inválido</mat-hint>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Razão social" formControlName="business_name" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Nome fantasia" formControlName="trending_name" required>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Data de abertura" formControlName="foundation_year" [textMask]="{mask: masks.date}" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput type="number" placeholder="Nª de funcionários" formControlName="employees_quantity" OnlyNumber required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Responsável legal" formControlName="legal_person" required>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <ng-container [ngSwitch]="companyForm.get('profile_id').value">
+
+                    <section *ngSwitchCase="1">
+
+                        <div [style.font-size.px]="24">
+
+                            <p [style.font-family]="'Helvetica Neue Bold'">PORTE DE EMPRESA</p>
+
+                            <p [style.font-family]="'Helvetica Neue Light'">faturamento ao ano</p>
+
+                        </div>
+
+                        <mat-radio-group class="flex justify-between" formControlName="company_size" required>
+                            <mat-radio-button value="1">MEI - Até R$ 60.000,00</mat-radio-button>
+                            <mat-radio-button value="2">Microempresa - Até R$ 360.000,00</mat-radio-button>
+                            <mat-radio-button value="3">Pequena empresa - R$ 360.000,00 a R$ 3.600.000,00</mat-radio-button>
+                        </mat-radio-group>
+
+                        <button mat-raised-button type="button" color="accent" (click)="tabIndex = tabIndex + 1" [disabled]="companyForm.invalid">
+                            Próximo
+                        </button>
+
+                    </section>
+
+                    <section *ngSwitchCase="2">
+
+                        <div [style.font-size.px]="24">
+
+                            <p [style.font-family]="'Helvetica Neue Bold'">IDIOMAS</p>
+
+                        </div>
+
+                        <mat-radio-group class="flex justify-between" formControlName="language" required>
+                            <mat-radio-button *ngFor="let language of selects.languages" [value]="language.description">{{ language.description }}</mat-radio-button>
+                        </mat-radio-group>
+
+                        <button mat-raised-button type="button" color="accent" (click)="tabIndex = tabIndex + 1" [disabled]="companyForm.invalid">
+                            Próximo
+                        </button>
+
+                    </section>
+
+                </ng-container>
+
+            </mat-tab>
+
+            <mat-tab [formGroup]="contactForm">
+                <ng-template mat-tab-label>
+                    <div [class]="tabIndex === 1 || (contactForm.valid && contactForm.get('phones').value.length !== 0) ? 'tab-title tab-title-selected' : 'tab-title'">
+                        <mat-icon>location_on</mat-icon>
+                        <p>Contato da empresa</p>
+                    </div>
+                </ng-template>
+
+                <div class="inner-content">
+
+                    <div>
+
+                        <div>
+
+                            <mat-form-field>
+                                <input matInput placeholder="CEP" formControlName="postal_code" (change)="getCEP(true)" [textMask]="{mask: masks.zip}" pattern="\d{5}-?\d{3}" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Endereço" formControlName="address" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Número" formControlName="number" required>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Bairro" formControlName="district" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Cidade" formControlName="city" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="UF" type="text" formControlName="state" pattern="^[a-zA-Z]*$" required (keydown)="preventNumberInput($event)" minlength="2" maxlength="2" [style.text-transform]="'uppercase'">
+                            </mat-form-field>
+                        </div>
+
+                        <div>
+
+                            <mat-form-field formGroupName="phone">
+                                <mat-select placeholder="Tipo de telefone" formControlName="phone_type_id" [required]="contactForm.get('phones').value.length < 1">
+                                    <mat-option *ngFor="let item of selects.phoneType" [value]="item.value">
+                                        {{item.description}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div formGroupName="phone">
+
+                                <div class="flex justify-between calc-add-button">
+
+                                    <mat-form-field [style.width.px]="51">
+                                        <input matInput placeholder="DDD" formControlName="ddd" maxlength="2" OnlyNumber [required]="contactForm.get('phones').value.length < 1">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="wd70">
+                                        <input matInput placeholder="Número" formControlName="number" [required]="contactForm.get('phones').value.length < 1" OnlyNumber minlength="8" maxlength="9">
+                                    </mat-form-field>
+
+                                </div>
+
+                                <button mat-mini-fab class="mt1" (click)="saveNewPhoneContact()" [disabled]="!contactForm.get('phone').get('phone_type_id').value || !contactForm.get('phone').get('ddd').value || !contactForm.get('phone').get('number').value || contactForm.get('phone').get('number').value.length < 8">
+                                    <mat-icon aria-label="Salvar telefone">add</mat-icon>
+                                </button>
+
+                            </div>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Email" formControlName="company_email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$" required>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div>
+
+                            <mat-form-field formGroupName="social_media">
+                                <mat-select placeholder="Mídia social" formControlName="digital_data_type">
+                                    <mat-option *ngFor="let item of selects.socialMedias" [value]="item.value">
+                                        {{item.description}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div formGroupName="social_media">
+
+                                <mat-form-field class="calc-add-button">
+                                    <input matInput placeholder="URL" formControlName="url">
+                                </mat-form-field>
+
+                                <button mat-mini-fab class="mt1" (click)="saveNewSocialMedia()" [disabled]="!contactForm.get('social_media').get('digital_data_type').value || !contactForm.get('social_media').get('url').value">
+                                    <mat-icon aria-label="Salvar mídia social">add</mat-icon>
+                                </button>
+
+                            </div>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Site" formControlName="company_site">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="flex justify-center">
+
+                            <button mat-button class="mr1" type="button" color="accent" [routerLink]="['']">
+                                CANCELAR
+                            </button>
+
+                            <button mat-raised-button type="button" color="accent" (click)="tabIndex = tabIndex + 1" [disabled]="contactForm.invalid || contactForm.get('phones').value.length === 0">
+                                Próximo
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </mat-tab>
+
+            <mat-tab [formGroup]="representativeForm">
+                <ng-template mat-tab-label>
+                    <div [class]="tabIndex === 2 || (representativeForm.get('participants').value.length > 0 || (representativeForm.valid && representativeForm.get('phones').value.length !== 0)) ? 'tab-title tab-title-selected' : 'tab-title'">
+                        <mat-icon>group</mat-icon>
+                        <p>Representantes</p>
+                    </div>
+                </ng-template>
+
+                <div class="inner-content">
+
+                    <div [style.margin]="companyForm.get('profile_id').value === 1 ? '2% 0 4%' : ''">
+
+                        <div>
+
+                            <mat-form-field>
+                                <mat-select placeholder="Titulo" formControlName="treatment" required>
+                                    <mat-option *ngFor="let item of selects.treatment" [value]="item.value">
+                                        {{item.description}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="CPF" formControlName="cpf_number" [textMask]="{mask: masks.cpf}" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Nome" formControlName="name" required>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div *ngIf="companyForm.get('profile_id').value === 1">
+
+                            <mat-form-field>
+                                <input matInput placeholder="Nascimento" formControlName="birthday" [textMask]="{mask: masks.date}" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <mat-select placeholder="Escolaridade" formControlName="schooling" required>
+                                    <mat-option *ngFor="let item of selects.schooling" [value]="item.value">
+                                        {{item.description}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="CEP" formControlName="postal_code" (change)="getCEP()" [textMask]="{mask: masks.zip}" pattern="\d{5}-?\d{3}" required>
+                            </mat-form-field>
+
+                        </div>
+
+                        <div *ngIf="companyForm.get('profile_id').value === 1">
+
+                            <mat-form-field>
+                                <input matInput placeholder="Endereço" formControlName="address" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Cidade" formControlName="city" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="UF" type="text" formControlName="state" pattern="^[a-zA-Z]*$" required (keydown)="preventNumberInput($event)" minlength="2" maxlength="2" [style.text-transform]="'uppercase'">
+                            </mat-form-field>
+
+                        </div>
+
+                        <div>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Cargo" formControlName="position" required>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput placeholder="Email" formControlName="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$" required>
+                            </mat-form-field>
+
+                            <div [style.width.%]="23.21"></div>
+
+                        </div>
+
+                        <div>
+
+                            <mat-form-field formGroupName="phone">
+                                <mat-select placeholder="Tipo de telefone" formControlName="phone_type_id" [required]="representativeForm.get('phones').value.length < 1">
+                                    <mat-option *ngFor="let item of selects.phoneType" [value]="item.value">
+                                        {{item.description}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div formGroupName="phone">
+
+                                <div class="flex justify-between calc-add-button">
+
+                                    <mat-form-field [style.width.px]="51">
+                                        <input matInput placeholder="DDD" formControlName="ddd" maxlength="2" OnlyNumber [required]="representativeForm.get('phones').value.length < 1">
+                                    </mat-form-field>
+
+                                    <mat-form-field class="wd70">
+                                        <input matInput placeholder="Número" formControlName="number" [required]="representativeForm.get('phones').value.length < 1" OnlyNumber minlength="8" maxlength="9">
+                                    </mat-form-field>
+
+                                </div>
+
+                                <button mat-mini-fab class="mt1" (click)="saveNewPhoneRepresentative()" [disabled]="!representativeForm.get('phone').get('phone_type_id').value || !representativeForm.get('phone').get('ddd').value || !representativeForm.get('phone').get('number').value || representativeForm.get('phone').get('number').value.length < 8">
+                                    <mat-icon aria-label="Salvar telefone">add</mat-icon>
+                                </button>
+
+                            </div>
+
+                            <div [style.width.%]="23.21"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="add-participant" [style.margin]="companyForm.get('profile_id').value === 2 ? '55px 0 5.9% 0' : '0 0 1%'" [style.cursor]="representativeForm.invalid || representativeForm.get('phones').value.length === 0 ? 'default' : 'pointer'">
+
+                        <div (click)="representativeForm.invalid || representativeForm.get('phones').value.length === 0 ? '' : addNewParticipant()" class="flex align-center" [style.opacity]="representativeForm.invalid || representativeForm.get('phones').value.length === 0 ? '0.3' : '1'">
+
+                            <mat-icon color="primary">add_circle_outline</mat-icon>
+
+                            <p>Adicionar mais participantes</p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="flex justify-center">
+
+                        <button mat-button class="mr1" type="button" color="accent" [routerLink]="['']">
+                            CANCELAR
+                        </button>
+
+                        <button mat-raised-button type="button" color="accent" (click)="tabIndex = tabIndex + 1" [disabled]="representativeForm.get('participants').value.length === 0 && (representativeForm.invalid || representativeForm.get('phones').value.length === 0)">
+                            Próximo
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </mat-tab>
+
+            <mat-tab [formGroup]="activityForm">
+                <ng-template mat-tab-label>
+                    <div [class]="tabIndex === 3 || activityForm.valid ? 'tab-title tab-title-selected' : 'tab-title'">
+                        <mat-icon>signal_cellular_alt</mat-icon>
+                        <p>Atividades</p>
+                    </div>
+                </ng-template>
+
+                <div [style.color]="'#5D5D5D'" class="wd100">
+
+                    <div class="activity">
+
+                        <p [style.font-family]="'Helvetica Neue Bold'">{{ companyForm.get('profile_id').value === 1 ? 'ATIVIDADES' : 'SETORES' }}</p>
+
+                    </div>
+
+                    <mat-radio-group class="wd100 flex flex-wrap justify-evenly" [style.font-size.px]="18" [style.margin-bottom.%]="24.5" [formControlName]="companyForm.get('profile_id').value === 1 ? 'group_id' : 'subgroup_id'" required>
+                        <mat-radio-button *ngFor="let item of (companyForm.get('profile_id').value === 1 ? groups : subgroups)" (click)="item.id === 1 || companyForm.get('profile_id').value === 2 ? selectActivity(item) : activityForm.get('product_id').reset()" [value]="item.id">{{ item.name }}</mat-radio-button>
+                    </mat-radio-group>
+
+                </div>
+
+
+                <div class="flex justify-center">
+
+                    <button mat-button class="mr1" type="button" color="accent" [routerLink]="['']">
+                        CANCELAR
+                    </button>
+
+                    <button mat-raised-button type="button" color="accent" (click)="tabIndex = tabIndex + 1" [disabled]="activityForm.invalid">
+                        Próximo
+                    </button>
+
+                </div>
+
+            </mat-tab>
+
+            <mat-tab [formGroup]="interestForm">
+                <ng-template mat-tab-label>
+                    <div [class]="tabIndex === 4 ? 'tab-title tab-title-selected' : 'tab-title'">
+                        <mat-icon>merge_type</mat-icon>
+                        <p>Interesses</p>
+                    </div>
+                </ng-template>
+
+                <div class="inner-content">
+
+                    <div [style.margin]="'2% 0'">
+
+                        <div [style.margin]="'0 5%'">
+
+                            <mat-form-field [style.width.%]="50">
+                                <input matInput placeholder="Interesses da empresa/Observações" formControlName="company_interests">
+                            </mat-form-field>
+
+                            <div [style.width.%]="50"></div>
+
+                        </div>
+
+                        <div>
+
+                            <mat-form-field>
+                                <input matInput placeholder="% de faturamento de vendas locais" formControlName="local_billing" min="1" max="100" maxlength="3" OnlyNumber>
+                            </mat-form-field>
+
+                            <mat-form-field formGroupName="local_revenue">
+                                <mat-select placeholder="Destino para vendas no Brasil" formControlName="origin_name">
+                                    <mat-option *ngFor="let item of states" [value]="item.description">
+                                        {{ item.description }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div formGroupName="local_revenue">
+
+                                <mat-form-field>
+                                    <input matInput placeholder="% de faturamento" formControlName="profit" min="1" max="100" maxlength="3" OnlyNumber>
+                                </mat-form-field>
+
+                                <button mat-mini-fab class="mt1" (click)="addNewLocalRevenue()" [disabled]="!interestForm.get('local_revenue').get('profit').value || !interestForm.get('local_revenue').get('origin_name').value">
+                                    <mat-icon aria-label="Salvar faturamento">add</mat-icon>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <div formGroupName="abroad_revenue">
+
+                            <mat-form-field>
+                                <mat-select placeholder="Destino das vendas no exterior" formControlName="origin_name">
+                                    <mat-option *ngFor="let item of countries" [value]="item.country_name_pt">
+                                        {{item.country_name_pt}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div>
+
+                                <mat-form-field>
+                                    <input matInput placeholder="% de faturamento" formControlName="profit" min="1" max="100" maxlength="3" OnlyNumber>
+                                </mat-form-field>
+
+                                <button mat-mini-fab class="mt1" (click)="addNewAbroadRevenue()" [disabled]="!interestForm.get('abroad_revenue').get('profit').value || !interestForm.get('abroad_revenue').get('origin_name').value">
+                                    <mat-icon aria-label="Salvar faturamento">add</mat-icon>
+                                </button>
+
+                            </div>
+
+                            <div></div>
+
+                        </div>
+
+                        <div [style.margin-left.%]="5" [style.margin-right.%]="5">
+
+                            <mat-form-field [style.width.%]="50">
+                                <input matInput [placeholder]="companyForm.get('profile_id').value === 1 ? 'Capacidade de vendas ( exportação ) / Mês (unidade)' : 'Perfil do parceiro'" [formControlName]="companyForm.get('profile_id').value === 1 ? 'sales_capacity' : 'partner_profile'">
+                            </mat-form-field>
+
+                            <div [style.width.%]="50"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="revenues" [style.opacity]="interestForm.get('local_revenues').value.length > 0 || interestForm.get('abroad_revenues').value.length > 0 ? 1 : 0">
+                        <table>
+
+                            <tr>
+                                <th>Local</th>
+                                <th [style.padding-left.px]="16">Faturamento</th>
+                            </tr>
+
+                            <tr *ngFor="let revenue of interestForm.get('local_revenues').value; let i = index;">
+                                <td>{{ revenue.origin_name }}</td>
+                                <td>{{ revenue.profit }}</td>
+                                <td (click)="removeRevenue(i, 'local_revenues')" class="pointer" [style.color]="'#c63335'">-</td>
+                            </tr>
+
+                            <tr *ngFor="let revenue of interestForm.get('abroad_revenues').value; let i = index;">
+                                <td>{{ revenue.origin_name }}</td>
+                                <td>{{ revenue.profit }}</td>
+                                <td (click)="removeRevenue(i, 'abroad_revenues')" class="pointer" [style.color]="'#c63335'">-</td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <div class="flex justify-center">
+
+                        <button mat-button class="mr1" type="button" color="accent" [routerLink]="['']">
+                            CANCELAR
+                        </button>
+
+                        <button mat-raised-button type="button" color="accent" (click)="onFinish()" [disabled]="companyForm.invalid || contactForm.invalid || contactForm.get('phones').value.length === 0 || representativeForm.get('participants').value.length === 0 &&(representativeForm.invalid || representativeForm.get('phones').value.length === 0) || activityForm.invalid">
+                            Concluir
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </mat-tab>
+
+        </mat-tab-group>
+
+        <mat-spinner *ngIf="loading"></mat-spinner>
+
+    </div>
+
+</div>
