@@ -1,6 +1,7 @@
 {
     "name": "enin-front",
     "version": "0.0.0",
+    "author": "Victor Machado",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
